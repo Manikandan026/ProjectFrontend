@@ -8,8 +8,22 @@ const Home = () => {
 
   const [name, setName] = useState('');
   const [image, setImage] = useState(null);
+  const [list,setList]=useState([])
 
- 
+ useEffect(()=>{
+     axios.get(`http://localhost:8080/api/category/all`)
+     .then((responce)=>{
+        console.log(responce.data);
+        
+        setList(responce.data);
+     })
+     .catch((error)=>{
+         console.log(error);
+     })
+    //  return () => {
+     
+    // };
+ },[])
 
   const handleSubmit=(e)=>{
     e.preventDefault();
@@ -61,23 +75,15 @@ const handleNameChange = (event) => {
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam eius laboriosam quibusdam 
             iste ullam, non maiores eos quos quasi explicabo animi rem recusandae beatae nostrum at.        </span>
        </div>
-   
+      <div className={style.items}>
+     
+      </div>
+
+
+
    <div className={style.abc}>
-                <input
-                     type="text"
-                        id="name"
-                        value={name}
-                        onChange={handleNameChange}
-                        placeholder="Enter category name"
-                        required
-                    />
-              <input
-                        type="file"
-                        id="image"
-                        accept="image/*"
-                        onChange={(e)=> setImage(e.target.files[0])}
-                        required
-                    />
+                <input type="text" id="name" value={name} onChange={handleNameChange} placeholder="Enter category name" required />
+              <input type="file" id="image" accept="image/*" onChange={handleImageChange} required />
 
 <button onClick={handleSubmit}>Upload</button>
    </div>
